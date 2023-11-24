@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300&family=Nunito:ital,wght@0,200;0,300;0,500;0,700;0,800;0,1000;1,200&family=Oswald:wght@200;300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../../styles/pages.css">
+    <title>Gabriel Hacking - Pickle Rick</title>
+</head>
+<body>
+    <nav id="nav">
+        <ul><a href="../../../index.html">Home</a></ul>
+        <ul><a class="main-page" href="../main.html">Write-ups</a></ul>
+        <ul><a href="../../Projects/main.html">Projects</a></ul>
+        <ul><a href="../../Articles/main.html">Articles</a></ul>
+        <ul><a href="#connect">Connect</a></ul>
+    </nav>
+    <main>
+
+        <div id="content">
+            <div id="title">
+            <h1>Pickle Rick [ CTF - TryHackMe ]</h1>
+            <p>Link to Pickle Rick CTF : <a href="https://tryhackme.com/room/picklerick">https://tryhackme.com/room/picklerick</a></p>
+            <img src="../../../assets/ctfs-imgs/pickle-rick/pickle-rick-main-pic.jpeg" alt="" width="250px">
+            </div>
+
+            
+            <p>This Rick and Morty-themed challenge requires you to exploit a web server and find three ingredients to help Rick make his potion and transform himself back into a human from a pickle.</p>
+            <p>When starting the TryHackMe machine, we are provided with an IP through which we can explore vulnerabilities in a web application.</p>
+            <p style="font-weight: bolder;"> MACHINE IP: 10.10.28.128 </p>
+            <p>First, I decided to scan the provided IP address using Nmap:</p>
+            <p style="font-weight: bolder;">Nmap -v -n 10.10.28.128</p>
+            <p>And these were the discovered ports: <br>
+                <br> 22/tcp open ssh <br>
+                <br>80/tcp open http <br> </p>
+            <p>In the browser, we're presented with the following web page:</p>
+            <img src="../../../assets/ctfs-imgs/pickle-rick/página-pickle-rick.png" alt="" width="600px">
+            <p>Analyzing the page's source code, a comment with a username is noticeable:</p>
+            <img src="../../../assets/ctfs-imgs/pickle-rick/codigo-fonte-pickle-rick.png" alt="" width="600px">
+            <p style="font-weight: bolder;"> Username: R1ckRul3s</p>
+            <p>Next, using Gobuster to search for hidden directories, I found the following folders:</p>
+            <img src="../../../assets/ctfs-imgs/pickle-rick/gobuster-result-pickle-rick.png" alt="" width="500px">
+            <p>/robots.txt has some text. Considering we found a username, this could be a possible password.
+                /assets didn't provide much usable information, so I used Gobuster again. This time, with the -x flag filtering directories ending with ".php" and ".txt", and the result was quite fruitful:</p>
+            <p style="font-weight: bolder;">
+                 /login.php
+                <br> /portal.php</p>
+            <p>On the /login.php page, I was able to use the previously found username and password to enter the /portal.php page, where there was an input for command execution.
+                First, I used the "ls -la" command for a more detailed listing of the folder:</p>
+            <img src="../../../assets/ctfs-imgs/pickle-rick/comand-pannel-result-ls-la.png" alt="" width="600px">
+            <p>I tried to open the Sup3rS3cretPickl3Ingred.txt file using the "cat" command, but the input has a filter to make the challenge harder. So, I tried other commands until I could open the file with the "nl" command, thus obtaining the first ingredient:</p>
+            <img src="../../../assets/ctfs-imgs/pickle-rick/comand-disabled.png" alt="" width="600px">
+            <img src="../../../assets/ctfs-imgs/pickle-rick/ingrediente01.png" alt="" width="600px">
+            <p style="font-weight: bolder;">[ FLAG 1 ] mr. meeseek hair</p>
+            <p>Using the same command, I could read the content of the clue.txt file and continued exploring the files within directories using the absolute path "../../" until I found the home folder:</p>
+            <p style="font-weight: bolder;">cd ../../../../home/;ls</p>
+            <p>In the Home folder, I entered the rick folder and found the second ingredient file</p>
+            <p style="font-weight: bolder;">cd ../../../../home/rick;ls</p>
+            <p>And I used "nl" to list its content, revealing the second flag:</p>
+            <p style="font-weight: bolder;">cd ../../../../home/rick;nl second\ ingredient <br> (note the "\" so the shell understands the space between the words)</p>
+            <img src="../../../assets/ctfs-imgs/pickle-rick/ingrediente02.png" alt="" width="600px">
+            <p style="font-weight: bolder;">[ FLAG 2 ] jerry tear</p>
+            <p>Continuing with exploration using the absolute path, I tried to enter the root in the same way, but I didn't get any results. So, I ran the "sudo -l" command to see what user restrictions were in place.</p>
+            <img src="../../../assets/ctfs-imgs/pickle-rick/comands.png" alt="" width="600px">
+            <p>The response stated that users have complete freedom in the system, so I used the sudo command directly to list files in the root directory and obtained the third flag:</p>
+            <p style="font-weight: bolder;">sudo nl ../../../../root/3rd.txt</p>
+            <img src="../../../assets/ctfs-imgs/pickle-rick/ingrediente03.png" alt="" width="600px">
+            <p style="font-weight: bolder;">[ FLAG 3 ] fleeb juice</p>
+            <br>
+            <p>And that's it! 
+                <br>Can't wait for the next CTF!
+                <br>If you think that I could have done this challenge in any other way, feel free to get in touch with me :)
+                <br>See ya in the next write-up!
+            </p>
+
+        </div>
+
+    </main>
+    <footer id="connect">
+        
+        <a href="https://www.linkedin.com/in/gabrielluiz000/"><img class="icons" id="icon-linkedin" src="../../../assets/icons/simple-icon-linkedin-white.png" alt=""></a>
+        <a href="https://github.com/Lgabz"><img class="icons" id="icon-github" src="../../../assets/icons/white-github.png" alt=""></a>
+        <a href="https://tryhackme.com/p/Munchausen"><img class="icon-THM" src="../../../assets/icons/THMlogo-white.webp" alt=""></a>
+    </footer>
+</body>
+</html>

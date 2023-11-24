@@ -46,7 +46,15 @@ a{
 }
 
 #content img{
-    margin: 35px auto 25px auto;
+    margin: 15px auto 25px auto;
+}
+
+#title img{
+    margin: 0 0 50px 0;
+}
+
+#title h1{
+    margin: 50px 0px 0px 0px;
 }
 
 footer{
