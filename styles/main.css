@@ -69,6 +69,7 @@ footer{
     display: flex;
     flex-direction: column;
     width: 980px;
+    height: 100vh;
     margin-top: 100px;
     margin-left: auto;
     margin-right: auto;
