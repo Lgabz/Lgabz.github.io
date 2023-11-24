@@ -1,0 +1,142 @@
+* {
+    font-family: 'Lora', serif;
+    color: white;
+}
+
+body {
+    background-color: black;
+    margin: 0 auto;
+}
+
+a{
+    text-decoration: none;
+    background-color: 0px 0px 0px #ffffff;
+}
+
+#nav a:hover{
+    padding: 0px 0px 10px 0px;
+    box-shadow: 0px 2px #ffffff;
+}
+
+#nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: larger;
+    font-weight: 600; 
+    box-shadow: 0px 1px #ffffff;
+    width: 980px;
+    height: 40px;
+    padding: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#profile-pic{
+    
+    width: 235px;
+    height: 220px;
+    border-radius: 50%;
+    border: 0px solid #ffffff;
+    transition: 0.5s;
+}
+#profile-pic:hover{
+    padding: 8px;
+    border: 1px solid #ffffff;
+    transition: 0.15s ease;
+}
+
+#hero {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0px auto 0px auto;
+    margin-top: 100px;
+    width: 980px;
+}
+
+#intro{
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+
+#hero-text p{
+    margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: 300;
+    margin-left: 50px;
+    justify-content: center;
+    width: 480px;
+}
+
+
+h1{
+    margin-left: 15px;
+    font-size: 45px;
+    width: 250px;
+}
+
+footer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 1px #ffffff;
+    width: 980px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 40px;
+    padding: 20px;
+}
+
+.icons{
+    width: 25px;
+    margin: 0px 30px 0px;
+}
+
+.icon-THM{
+    width: 58px;
+    margin: 0px 30px 0px;
+}
+
+.icons:hover{
+    transform: scale(1.1);
+}
+
+.icon-THM:hover{
+    transform: scale(1.1);
+}
+
+#links{
+    display: flex;
+    width: 980px;
+    margin-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    text-decoration: none;
+    align-items: center;
+    justify-content: space-between;
+    
+}
+
+#links a{
+    display: flex;
+    padding: 40px;
+    width: 100px;
+    height: 250px;
+    margin-bottom: 150px;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #ffffff;
+    transition: 0.5s;
+}
+
+#links a:hover{
+    background-color: #ffffff;
+    width: 100px;
+    height: 100px;
+    border-radius: 60%;
+    color: black;
+    font-weight: 800;
+    transition: 0.5s;
+}
