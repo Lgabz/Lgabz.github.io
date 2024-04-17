@@ -60,7 +60,8 @@ a{
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0px auto 0px auto;
+    margin-left: auto;
+    margin-right: auto;
     width: 980px;
     position: inherit;
 }
@@ -68,7 +69,7 @@ a{
 #intro{
     position: absolute;
     margin-top: -80px;
-    margin-right: 33%;
+    margin-right: 35.5%;
     margin-left: auto;
     display: flex;
     align-items: center;
@@ -82,14 +83,14 @@ a{
     margin-bottom: 20px;
     font-size: 18px;
     font-weight: 430;
-    margin-left: 57.5%;
+    margin-left: 57%;
     justify-content: center;
     width: 480px;
 }
 
 
 h1{
-    margin-left: 15px;
+    margin-left: 30px;
     font-size: 45px;
     width: 250px;
 }
@@ -98,8 +99,8 @@ h1{
     display: flex;
     position: absolute;
     align-items: center;
-    justify-content: center;
-    margin-left: 800px;
+    justify-content: right;
+    margin-left: 820px;
     margin-right: auto;
     margin-top: -82px;
     padding: 20px;
@@ -113,7 +114,7 @@ h1{
 
 .icon-THM{
     width: 58px;
-    margin: 0px 30px 0px;
+    margin: 0px 0px 0px 30px;
 }
 
 .icons:hover{
@@ -128,7 +129,7 @@ h1{
     display:flex;
     width: 425px;
     margin-top: -102px;
-    margin-left: 105px;
+    margin-left: 80px;
     margin-right: 56.%;
     text-decoration: none;
     align-items: center;
