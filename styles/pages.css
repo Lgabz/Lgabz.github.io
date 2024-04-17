@@ -1,5 +1,6 @@
 * {
     font-family: 'Lora', serif;
+    font-weight: 700;
     color: black;
 }
 
@@ -62,6 +63,7 @@ a{
     display: flex;
     flex-direction: column;
     font-size: 18px;
+    font-weight: 450;
     width: 980px;
     margin-left: auto;
     margin-right: auto;
