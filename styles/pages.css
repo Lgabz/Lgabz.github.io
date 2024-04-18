@@ -63,11 +63,23 @@ a{
     display: flex;
     flex-direction: column;
     font-size: 18px;
-    font-weight: 450;
     width: 980px;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 200px;
+}
+#content #title p{
+    font-weight: 700;
+}
+#content p, li{
+    font-weight: 200;
+    
+}
+
+#content li {
+    list-style: inside;
+    list-style-position: outside;
+    margin-bottom: 20px;
 }
 
 #content img{
@@ -111,3 +123,7 @@ footer{
     transform: scale(1.1);
 }
 
+#content .tab-space {
+    display: flex;
+    margin-left: 2em;
+}

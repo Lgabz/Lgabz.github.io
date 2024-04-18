@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300&family=Nunito:ital,wght@0,200;0,300;0,500;0,700;0,800;0,1000;1,200&family=Oswald:wght@200;300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../../styles/pages.css">
+    <title>Gabriel Hacking - SMTP Brute Force Script</title>
+</head>
+<body>
+    <div id="background">
+        <a href="#nav" id="arrow-img"><img src="../../../assets/icons/arrow-white.png" alt=""></a>
+    <nav id="nav">
+        <ul><a href="../../../index.html">Home</a></ul>
+        <ul><a  href="../../WriteUps/main.html">Write-ups</a></ul>
+        <ul><a class="main-page" href="../main.html">Articles</a></ul>
+        <ul><a href="#connect">Connect</a></ul>
+    </nav>
+    <main>
+
+        <div id="content">
+
+            <div id="title">
+                <h1>Creating a brute force script on an SMTP server for users enumeration</h1>
+    
+                <p>The Simple Mail Transfer Protocol (SMTP) is an essential part of the internet infrastructure, facilitating the quick and efficient sending of emails. In this article, we'll delve into the concept of SMTP, its utility, and common examples of its usage. Additionally, we'll explore how SMTP stores users and how we can utilize this information for enumeration and vulnerability exploitation.</p>
+            </div>
+
+            <h3>What is SMTP?</h3>
+            <p>SMTP, or Simple Mail Transfer Protocol, is a communication protocol used to send and receive emails over the internet. It acts as a kind of "digital mailman," transferring email messages from the sender to the recipient's email server. Crucial for email communication, SMTP is widely used in various applications, including:</p>
+            <ul>
+                <li>Sending personal and commercial emails;</li>
+                <li>Automatic notifications from systems and services;</li>
+                <li>Confirmation of registration and password reset on websites and applications;</li>
+                <li>Mass communication, such as newsletters and email marketing campaigns.</li>
+            </ul>
+            <h3>SMTP and users storage</h3>
+            <p>SMTP-using email servers typically store user information, including email addresses and related settings. This data is essential for the email service's operation, aiding in message addressing.</p>
+            <h3>Vulnerabilities and exploitation</h3>
+            <p>SMTP servers are not inherently secure, lacking built-in encryption or security mechanisms, making them vulnerable to various threats such as spoofing, spam, data leaks, and social engineering attacks. One potential vulnerability in systems using this protocol is user enumeration. This occurs when an attacker attempts to discover which email addresses are registered on the server. Once users have been successfully enumerated, attackers can exploit other potential vulnerabilities in the email system, such as weak passwords, improper configurations, or security flaws, to gain unauthorized access to email accounts.</p>
+            <p>Enumeration can be initiated by searching for open ports on this service. By default, the SMTP protocol operates on port 25. Upon identifying an open port 25, we can attempt to interact with the service using the Netcat utility to obtain information such as the server banner containing the operating system used, version numbers, etc. Some useful commands include:</p>
+            <ul>
+                <li>HELO: Introduce yourself. Intended to provide the domain name, such as Example.com, or the IP address of the sending SMTP server to the receiving SMTP server;</li>
+                <li>EHLO: Introduce yourself and request extended mode;</li>
+                <li>RCPT TO: Specify the recipient;</li>
+                <li>MAIL FROM: Specify the sender;</li>
+                <li>DATA: Specify the email body;</li>
+                <li>VRFY [user]: Verify certain users;</li>
+                <li>HELP: Provide available resources (may not always be active).</li>
+            </ul>
+            <p>Here, we can highlight the VRFY command, which will be used in our script.</p>
+            <p>Some email servers may have multiple registered users, and using this command on each of them can be quite laborious. Additionally, if we don't have any credentials on hand, testing which users exist there or not becomes complicated. Therefore, it's interesting to know how to construct a script that automates this user enumeration process.</p>
+            <h3>The script</h3>
+            <p>First, we need to create a file where usernames will be stored or use a previously created dictionary. Then, we create our PY file:</p>
+            <img src="../../../assets/imgs/enumpy.png" alt="">
+            <p>Understanding the script, line by line:</p>
+            <p>We import the Socket and Sys modules (for working with arguments). The script will be used as follows, using the arguments:</p>
+            <p style="font-weight: bold;">$ ./script-name target-host-IP /path/to/file </p>
+            <p>We assign the file containing the list of names to a variable:</p>
+            <p style="font-weight: bold;">file = open(sys.argv[2])</p>
+            <p>Then we create a loop to establish a TCP connection with the SMTP server and receive the service banner for each user listed in the file:</p>
+            <p style="font-weight: bold;">for line in file:</p>
+            <p class="tab-space" style="font-weight: bold;">tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</p>
+            <p class="tab-space"style="font-weight: bold;">tcp.connect((sys.argv[1],  25))</p>
+            <p class="tab-space"style="font-weight: bold;">banner = tcp.recv(1024)</p>
+            <p>Assign the VRFY command + the name contained in the passed file to the str variable:</p>
+            <p style="font-weight: bold;">str = "VRFY " + line </p>
+            <p>Encode the str variable type from Strings to Byte-type and assign it to the newStr variable. Then we send it to the SMTP server</p>
+            <p style="font-weight: bold;">newStr = str.encode()</p>
+            <p style="font-weight: bold;">tcp.send(newStr) </p>
+            <p>We receive the server's response and decode the value back to a String </p>
+            <p style="font-weight: bold;">response = tcp.recv(1024) </p>
+            <p style="font-weight: bold;">newResp = response.decode() </p>
+            <p>Here we're checking with RE module if the provided user is registered in this SMTP server:</p>
+            <p style="font-weight: bold;">if re.search("252", newResp):</p>
+            <p class="tab-space"style="font-weight: bold;">print("User found: " + newResp.strip("252 2.0.0"))</p>
+            <p>I also added some extra lines in this code to improve the appearance during its execution:</p>
+            <img src="../../../assets/imgs/enumpy-2.png" alt=""><br><br>
+            <h3>Conclusion</h3>
+            <p>In summary, we've explored the workings of the SMTP protocol, its utility in email communication, and the vulnerabilities that can arise, especially related to user enumeration. Recognizing the importance of SMTP server security is crucial to safeguarding sensitive user data and preventing potential exploits by attackers.</p>
+            <p>To mitigate risks, it's essential to implement robust security measures such as encryption, strong authentication, and continuous monitoring of SMTP traffic. Additionally, staying updated on security best practices and being vigilant for any suspicious activity on your email servers is paramount. </p>
+            <p>Understanding and securing SMTP servers is a critical step in ensuring the integrity and security of email communications. By taking a proactive approach to cybersecurity, we can protect our systems and data against potential threats.</p>
+        </div>
+
+    </main>
+    <footer id="connect">
+        
+        <a href="https://www.linkedin.com/in/gabrielluiz000/"><img class="icons" id="icon-linkedin" src="../../../assets/icons/linkedin-black-logo.png" alt=""></a>
+        <a href="https://github.com/Lgabz"><img class="icons" id="icon-github" src="../../../assets/icons/github_logo_icon_143772.svg" alt=""></a>
+        <a href="https://tryhackme.com/p/b1la"><img class="icon-THM" src="../../../assets/icons/THM-normal-colors-logo.png" alt=""></a>
+    </footer>
+    </div>
+</body>
+</html>
