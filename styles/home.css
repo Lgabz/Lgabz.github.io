@@ -12,7 +12,7 @@ body {
     display: block;
     background-color: #ffffff;
     width: 1200px;
-    height: 724px;
+    height: 100vh;
     margin-left: auto;
     margin-right: auto;
     justify-content: center;
@@ -44,35 +44,39 @@ a{
     margin-bottom: 50px;
 }
 
+#hero {
+    display: flexbox;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 1020px;
+    position: inherit;
+}
+
+#intro{
+    position: absolute;
+    display: flexbox;
+    margin-top: 10px;
+    margin-right: 35.5%;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+
 #profile-pic{
     width: 180px;
     height: 200px;
     border: 2px solid #000000;
     transition: 0.2s ease;
 }
+
 #profile-pic:hover{
+    margin-left: -10px;
+    margin-top: -10px;
     padding: 10px;
     border: 2px solid #000000;
     transition: 0.15s ease;
-}
-
-#hero {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-left: auto;
-    margin-right: auto;
-    width: 980px;
-    position: inherit;
-}
-
-#intro{
-    position: absolute;
-    margin-top: -80px;
-    margin-right: 35.5%;
-    margin-left: auto;
-    display: flex;
-    align-items: center;
 }
 
 #hero-text {
@@ -83,7 +87,7 @@ a{
     margin-bottom: 20px;
     font-size: 18px;
     font-weight: 430;
-    margin-left: 57%;
+    margin-left: 50%;
     justify-content: center;
     width: 480px;
 }
